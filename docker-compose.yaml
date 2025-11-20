@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  postgres_auth:
+    image: postgres:16
+    container_name: postgres_auth
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: user_credentials_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: auth-service
+    restart: always
+    depends_on:
+      - postgres_auth
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+networks:
+  default:
+    external: true
+    name: microservices-net
+
+volumes:
+  postgres_data:
