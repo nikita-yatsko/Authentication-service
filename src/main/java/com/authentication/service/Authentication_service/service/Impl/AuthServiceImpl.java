@@ -104,7 +104,7 @@ public class AuthServiceImpl implements AuthService {
                         userDetails.getAuthorities()
                 );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication); // put user to SecurityContext
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return jwtService.generateTokePair(authentication);
     }
