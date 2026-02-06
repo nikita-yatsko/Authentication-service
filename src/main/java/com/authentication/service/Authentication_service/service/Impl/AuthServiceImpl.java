@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
 
         UserRequest userRequest = new UserRequest();
         userRequest.setUserId(authUserSaved.getId());
-        userRequest.setName(request.getUsername());
+        userRequest.setName(request.getName());
         userRequest.setSurname(request.getSurname());
         userRequest.setBirthDate(request.getBirthDate());
         userRequest.setEmail(request.getEmail());
