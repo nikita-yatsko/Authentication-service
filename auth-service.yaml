@@ -47,8 +47,9 @@ spec:
           env:
             - name: JAVA_OPTS
               value: "-XX:+UseContainerSupport -Xmx256m -Xms512m"
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://auth_db:5432/user_credentials_db"
+            - name: MANAGEMENT_OTLP_TRACING_ENDPOINT
+              value: "http://tempo.monitoring.svc.cluster.local:4318/v1/traces"
+        
           envFrom:
             - secretRef:
                 name: auth-service-db-secret
@@ -56,7 +57,7 @@ spec:
             httpGet:
               path: /actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 60
+            initialDelaySeconds: 240
             periodSeconds: 5
             timeoutSeconds: 2
 
@@ -64,7 +65,7 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 80
+            initialDelaySeconds: 300
             periodSeconds: 10
             timeoutSeconds: 2
 
